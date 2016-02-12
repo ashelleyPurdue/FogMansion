@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DummyEnemyBehaviour : MonoBehaviour {
+[RequireComponent(typeof(RigidbodyCharMotor))]
+public class DummyEnemyBehaviour : MonoBehaviour
+{
+    private RigidbodyCharMotor motor;
 
-	// Use this for initialization
-	void Start () {
-	
+    //Events
+
+	void Awake()
+    {
+        motor = GetComponent<RigidbodyCharMotor>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
+	void FixedUpdate()
+    {
+        motor.Jump();
 	}
 }

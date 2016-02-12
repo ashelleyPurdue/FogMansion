@@ -2,12 +2,14 @@
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CapsuleCollider))]
 public class RigidbodyCharMotor : MonoBehaviour
 {
     public Vector3 inputDirection;
     public float jumpForce;
 
     private Rigidbody rigid;
+    private CapsuleCollider my_collider;
 
     private bool isGrounded = false;
     private float groundCheckDist = 0.1f;
@@ -18,6 +20,7 @@ public class RigidbodyCharMotor : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
+        my_collider = GetComponent<CapsuleCollider>();
     }
 
     void FixedUpdate()
@@ -39,6 +42,9 @@ public class RigidbodyCharMotor : MonoBehaviour
 
     private void UpdateGrounded()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.up * -1, groundCheckDist);
+        Vector3 startPos = transform.position;
+        startPos -= Vector3.up * my_collider.height / 2;
+
+        isGrounded = Physics.Raycast(startPos, Vector3.up * -1, groundCheckDist);
     }
 }
